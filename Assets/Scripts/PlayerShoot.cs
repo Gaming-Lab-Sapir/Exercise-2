@@ -1,16 +1,21 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerShoot : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] public Transform shootingPoint;
+    public GameObject bulletPrefab;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if(Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Instantiate(bulletPrefab,shootingPoint.position,transform.rotation);
+        }
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) 
+        { 
+            GetComponent<Animator>()?.SetTrigger("Shoot"); 
+        }
+            
     }
 }
