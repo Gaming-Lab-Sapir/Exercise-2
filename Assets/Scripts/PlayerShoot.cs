@@ -8,14 +8,13 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update()
     {
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Instantiate(bulletPrefab,shootingPoint.position,transform.rotation);
+            Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
         }
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) 
-        { 
-            GetComponent<Animator>()?.SetTrigger("Shoot"); 
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            GetComponent<Animator>()?.SetTrigger("Shoot");
         }
-            
     }
 }
