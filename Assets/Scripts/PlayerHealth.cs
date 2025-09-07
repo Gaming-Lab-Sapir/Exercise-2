@@ -4,11 +4,11 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int maxHealth = 3;
-    [SerializeField] float iFrames = 0.8f;           
-    [SerializeField] Image[] hpIcons;                
+    [SerializeField] float iFrames = 0.8f;
+    [SerializeField] Image[] hpIcons;
 
     [Header("Game Over UI")]
-    [SerializeField] GameObject gameOverText;        
+    [SerializeField] GameObject gameOverText;
 
     [Header("Restart")]
     [SerializeField] float restartDelaySeconds = 2f; 
@@ -21,6 +21,9 @@ public class PlayerHealth : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
     }
+
+    void OnEnable() => GameEvents.PlayerDamaged += TakeDamage;
+    void OnDisable() => GameEvents.PlayerDamaged -= TakeDamage;
 
     void Start()
     {
@@ -55,9 +58,7 @@ public class PlayerHealth : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        var reloader = FindFirstObjectByType<SceneReloader>(); 
-        if (reloader != null)
-            reloader.RestartAfterDelay(restartDelaySeconds);
+        GameEvents.RaiseGameLost();
 
         var col = GetComponent<Collider2D>(); if (col) col.enabled = false;
         var move = GetComponent<PlayerMovement>(); if (move) move.enabled = false;

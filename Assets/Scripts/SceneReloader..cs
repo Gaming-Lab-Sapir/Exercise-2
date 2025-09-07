@@ -3,11 +3,31 @@ using UnityEngine.SceneManagement;
 
 public class SceneReloader : MonoBehaviour
 {
-    public void RestartAfterDelay(float seconds) => StartCoroutine(Co(seconds));
+    [SerializeField] float restartDelaySeconds = 2f;
+    bool _running;
 
-    private System.Collections.IEnumerator Co(float seconds)
+    void OnEnable()
     {
-        yield return new WaitForSecondsRealtime(seconds); 
+        GameEvents.GameWon += HandleRestart;
+        GameEvents.GameLost += HandleRestart;
+    }
+
+    void OnDisable()
+    {
+        GameEvents.GameWon -= HandleRestart;
+        GameEvents.GameLost -= HandleRestart;
+    }
+
+    void HandleRestart()
+    {
+        if (_running) return;      
+        _running = true;
+        StartCoroutine(Co());
+    }
+
+    System.Collections.IEnumerator Co()
+    {
+        yield return new WaitForSecondsRealtime(restartDelaySeconds);
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

@@ -3,12 +3,15 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI scoreText;        
-    [SerializeField] GameObject winText;               
-    [SerializeField] float restartDelaySeconds = 2f;   
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] GameObject winText;
+    [SerializeField] float restartDelaySeconds = 2f;  
 
     int currentScore = 0;
     int targetScore;
+
+    void OnEnable() => GameEvents.EnemyKilledByBullet += OnEnemyKilledByBullet;
+    void OnDisable() => GameEvents.EnemyKilledByBullet -= OnEnemyKilledByBullet;
 
     void Start()
     {
@@ -23,7 +26,9 @@ public class ScoreManager : MonoBehaviour
             winText.SetActive(false);
     }
 
-    public void AddPoint()
+    public void AddPoint() => OnEnemyKilledByBullet();
+
+    private void OnEnemyKilledByBullet()
     {
         currentScore++;
 
@@ -37,9 +42,7 @@ public class ScoreManager : MonoBehaviour
 
             Time.timeScale = 0f;
 
-            var reloader = FindFirstObjectByType<SceneReloader>();
-            if (reloader != null)
-                reloader.RestartAfterDelay(restartDelaySeconds);
+            GameEvents.RaiseGameWon();
         }
     }
 }

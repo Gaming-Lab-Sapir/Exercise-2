@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;    
-    [SerializeField] private float spawnInterval = 3f;  
-    [SerializeField] private int maxEnemies = 10;       
-    [SerializeField] private float spawnRadius = 0.9f;  
-
-    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private float spawnInterval = 3f;
+    [SerializeField] private int maxEnemies = 10;
+    [SerializeField] private float spawnRadius = 0.9f;
 
     private int currentEnemies = 0;
 
@@ -30,7 +28,6 @@ public class EnemySpawner : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.OnEnemyDestroyed += HandleEnemyDestroyed;
-                    enemy.Init(scoreManager); 
                 }
                 currentEnemies++;
             }
