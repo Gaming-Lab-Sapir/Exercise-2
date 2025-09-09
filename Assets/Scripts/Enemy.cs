@@ -54,9 +54,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator WaitToDestroy(float t)
+    IEnumerator WaitToDestroy(float time)
     {
-        yield return new WaitForSeconds(t);
+        yield return new WaitForSeconds(time);
         OnEnemyDestroyed?.Invoke();
         Destroy(gameObject);
     }

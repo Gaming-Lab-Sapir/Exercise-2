@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneReloader : MonoBehaviour
 {
     [SerializeField] float restartDelaySeconds = 2f;
-    bool _running;
+    bool running;
 
     void OnEnable()
     {
@@ -20,12 +20,12 @@ public class SceneReloader : MonoBehaviour
 
     void HandleRestart()
     {
-        if (_running) return;      
-        _running = true;
-        StartCoroutine(Co());
+        if (running) return;      
+        running = true;
+        StartCoroutine(RestartGame());
     }
 
-    System.Collections.IEnumerator Co()
+    System.Collections.IEnumerator RestartGame()
     {
         yield return new WaitForSecondsRealtime(restartDelaySeconds);
         Time.timeScale = 1f;

@@ -17,7 +17,7 @@ public class ScoreManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        targetScore = Random.Range(1, 6);
+        targetScore = Random.Range(10, 20);
 
         if (scoreText != null)
             scoreText.text = $"Score: {currentScore}/{targetScore}";
